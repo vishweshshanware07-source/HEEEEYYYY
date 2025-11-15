@@ -1,0 +1,99 @@
+:root{
+  --pink1:#ff9db0;
+  --pink2:#ff4d6d;
+  --white:#ffffff;
+  --muted: rgba(255,255,255,0.92);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family: Inter, Arial, Helvetica, sans-serif}
+body{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  background: linear-gradient(135deg,var(--pink1),var(--pink2));
+  color:var(--white);
+  overflow:hidden;
+}
+
+/* Header message */
+#messageBox{
+  position:fixed;
+  top:8px;
+  left:0;
+  right:0;
+  text-align:center;
+  font-weight:700;
+  text-shadow:0 2px 8px rgba(0,0,0,0.25);
+  z-index:40;
+  padding:6px 12px;
+}
+
+/* Controls centered */
+#controls{
+  position:relative;
+  z-index:30;
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
+/* Buttons */
+#startBtn, label[for], #uploadLabel{
+  background:var(--muted);
+  color:#ff2e5a;
+  border:none;
+  font-weight:700;
+  padding:12px 22px;
+  border-radius:12px;
+  cursor:pointer;
+  box-shadow:0 6px 18px rgba(0,0,0,0.12);
+  transition: transform .15s ease;
+}
+#startBtn:hover, #uploadLabel:hover{transform:translateY(-3px)}
+
+/* hide native file input */
+#fileInput{display:none}
+
+/* image */
+#chum{
+  position:absolute;
+  width:150px;
+  height:auto;
+  display:none;
+  cursor:pointer;
+  user-select:none;
+  z-index:25;
+  transform: translate(-50%,-50%);
+  transition: left 1.2s cubic-bezier(.22,.9,.28,1),
+              top 1.2s cubic-bezier(.22,.9,.28,1),
+              transform .18s ease;
+  will-change:left,top,transform;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.18));
+}
+
+/* small retry/ok button will be created by JS (#okBtn) */
+
+/* image error text */
+#imageError{
+  position:fixed;
+  bottom:12px;
+  left:0;
+  right:0;
+  text-align:center;
+  color:var(--white);
+  font-size:0.95rem;
+  z-index:45;
+  text-shadow:0 1px 8px rgba(0,0,0,0.35);
+}
+
+/* utility */
+.hidden{display:none}
+
+/* responsive */
+@media (max-width:520px){
+  #chum{ width:110px }
+  #startBtn{ padding:10px 18px }
+}
