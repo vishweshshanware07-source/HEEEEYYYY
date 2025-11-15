@@ -182,3 +182,52 @@ function resetToStart(){
 window.addEventListener('load', () => {
   tryLoadRepoImage();
 });
+(function setupBackgroundAudio(){
+  const audio = document.getElementById('bgAudio');
+  if(!audio) return;
+
+  // small play button created if autoplay is blocked
+  const btn = document.createElement('button');
+  btn.id = 'audioPlayBtn';
+  btn.innerText = 'Play Music';
+  btn.className = 'hidden';
+  document.body.appendChild(btn);
+
+  // try autoplay on load
+  window.addEventListener('load', () => {
+    // attempt to play (may be blocked by browser)
+    audio.play().then(() => {
+      // playing succeeded
+      btn.classList.add('hidden');
+      btn.innerText = 'Pause';
+      // change text if user wants to pause
+    }).catch(() => {
+      // autoplay blocked — show the small play button
+      btn.classList.remove('hidden');
+    });
+  });
+
+  // toggle play/pause on button click
+  btn.addEventListener('click', () => {
+    if(audio.paused){
+      audio.play().then(()=> {
+        btn.innerText = 'Pause';
+      }).catch(()=> {
+        // If still blocked, keep telling user
+        alert('Autoplay blocked. Please tap the page to enable sound.');
+      });
+    } else {
+      audio.pause();
+      btn.innerText = 'Play Music';
+    }
+  });
+
+  // optional: pause music when final message shows (keeps focus on message)
+  const originalShowFinalMessage = window.showFinalMessage;
+  if(typeof originalShowFinalMessage === 'function'){
+    window.showFinalMessage = function(){ 
+      audio.pause();
+      originalShowFinalMessage();
+    };
+  }
+})();
